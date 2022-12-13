@@ -5,6 +5,8 @@ const cors = require('cors')
 const multer = require('multer')
 const reader = require('xlsx')
 var async = require('async');
+const mongoose = require("mongoose")
+const Candidate = require("./model/candidateSchema")
 
 
 const storage = multer.diskStorage({
@@ -28,9 +30,9 @@ app.post('/image', upload.single('file'), function (req, res) {
   for(let i = 0; i < sheets.length; i++){
     const temp = reader.utils.sheet_to_json(
           file.Sheets[file.SheetNames[i]])
-    temp.forEach((res) => {
-        data.push(res)
-    })
+    // temp.forEach((res) => {
+    //     data.push(res)
+    // })
 
     async.eachSeries(temp,function(item, cb){
       setTimeout(function() {
