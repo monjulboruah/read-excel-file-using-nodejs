@@ -2,7 +2,7 @@ const Candidate = require("../model/candidateSchema");
 const reader = require("xlsx");
 
 
-const saveToDb = async function (req, res, candidateData) {
+const saveToDb =  function (candidateData) {
   const data = {};
 
   if (candidateData["Name of the Candidate"]) {
@@ -43,10 +43,7 @@ const saveToDb = async function (req, res, candidateData) {
   }
 
   console.log(data);
-  const newCand = new Candidate(data);
-  await newCand.save();
-  callback();
-  return "seccess";
+  return data;
 
   // console.log(candidateData);
 };
@@ -68,13 +65,15 @@ const userController = {
 
       for(let i=0; i<data.length; i++){
         const email = Candidate.findOne({
-          email: ele["Email"],
+          email: data[i]["Email"],
         });
 
         if (email) {
           return res.send("email already exist");
         } else {
-          let res = await saveToDb(req, res, ele);
+          let d = saveToDb(data[i]);
+          const newCand = new Candidate(d);
+          await newCand.save();
         }
       }
       // data.forEach(async (ele) => {
