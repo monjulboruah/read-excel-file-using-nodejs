@@ -8,7 +8,7 @@ function App() {
     e.preventDefault()
     let formData = new FormData()
     formData.append('file', image.data)
-    const response = await fetch('https://monjulboruah-scaling-zebra-j9rrrr7pww5249x-5000.preview.app.github.dev/image', {
+    const response = await fetch('https://monjulboruah-scaling-zebra-j9rrrr7pww5249x-5000.preview.app.github.dev/create', {
       method: 'POST',
       body: formData,
     })
