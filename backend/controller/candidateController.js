@@ -62,20 +62,30 @@ const userController = {
         data.push(res);
       });
 
+      let dta = [];
 
       for(let i=0; i<data.length; i++){
-        const email = Candidate.findOne({
-          email: data[i]["Email"],
-        });
-
-        if (email) {
-          return res.send("email already exist");
-        } else {
           let d = saveToDb(data[i]);
-          const newCand = new Candidate(d);
-          await newCand.save();
+          dta.push(d);
         }
-      }
+      
+      console.log(dta)
+
+      // Candidate.insert(dta, function(err, docs){
+      //   if(err){
+      //     res.json({msg: "Failed!"})
+      //   }else{
+      //     res.json({msg: "Success"})
+      //   }
+      // })
+     let result = await Candidate.insertMany(dta)
+      
+     if(result){
+      console.log("success")
+      res.json({msg: "Success"})
+     }else{
+      res.json({msg: "Failed"})
+     }
       // data.forEach(async (ele) => {
       //   const email = Candidate.findOne({
       //     email: ele["Email"],
@@ -89,7 +99,6 @@ const userController = {
       //   }
       // });
 
-      res.json({msg: "Upload Successful!"})
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
