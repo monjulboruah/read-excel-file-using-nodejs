@@ -14,7 +14,7 @@ const candidateSchema = new Schema(
     currLoc: String,
     postalAdd: String,
     pointOfOccurance: String,
-    currEmployer: Boolean,
+    currEmployer: String,
     currDesgn: String,
   },
   {
